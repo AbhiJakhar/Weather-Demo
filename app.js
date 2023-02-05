@@ -17,6 +17,10 @@ app.post("/",function(req,res){
     const url="https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=ecc1285fba30f3414532c9c0f6f0f1e8&units=metric";
     https.get(url,function(response){
       console.log(response.statusCode);
+      if(response.statusCode==404){
+        res.send("write correct city name");
+      }
+      else {
       response.on("data",function(data){
        const weatherData=JSON.parse(data);
        const temp=weatherData.main.temp;
@@ -30,7 +34,8 @@ app.post("/",function(req,res){
        res.write("")
        res.send();
       });
-    });
+    }
+});
 
 })
 
